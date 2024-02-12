@@ -59,7 +59,7 @@ class BasicClient(object):
 
 
 if __name__ == '__main__':
-    clt = BasicClient("frida_kahlo","127.0.0.1",2000)
+    clt = BasicClient("full_stack_alchemists","127.0.0.1",2000)
     while True:
         m = input("enter message: ")
         if m == '' or m == 'exit':
