@@ -7,63 +7,59 @@ class BasicClient(object):
         self.name = name
         self.ipaddr = ipaddr
         self.port = port
-
         self.group = "public"
+        self.connected = False  
 
-        if self.ipaddr is None:
+        if not self.ipaddr:
             raise ValueError("IP address is missing or empty")
-        elif self.port is None:
-            raise ValueError("port number is missing")
-
+        if not self.port:
+            raise ValueError("Port number is missing")
         self.connect()
 
     def __del__(self):
         self.stop()
 
     def stop(self):
-        if self._clt is not None:
+        if self._clt:
             self._clt.close()
         self._clt = None
+        self.connected = False
 
     def connect(self):
-        if self._clt is not None:
+        if self._clt:
             return
-
-        addr = (self.ipaddr,self.port)
+        addr = (self.ipaddr, self.port)
         self._clt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self._clt.connect(addr)
-        except socket.error as e:
+            self.connected = True
+        except Exception as e:  
             print(f"Could not connect to server: {e}")
-        #self._clt.setblocking(False)
+            self.connected = False
 
     def join(self, group):
         self.group = group
 
     def sendMsg(self, text):
-        if self._clt is None:
+        if not self.connected:
             raise RuntimeError("No connection to server exists")
-
         print(f"sending to group {self.group} from {self.name}: {text}")
         bldr = builder.BasicBuilder()
-        m = bldr.encode(self.name,self.group,text)
+        m = bldr.encode(self.name, self.group, text)
         self._clt.send(bytes(m, "utf-8"))
 
     def groups(self):
-        # return list of groups
+        # Placeholder for future implementation
         pass
 
     def getMsgs(self):
-        # get the latest messages from a group
+        # Placeholder for future implementation
         pass
 
-
 if __name__ == '__main__':
-    clt = BasicClient("full_stack_alchemists","127.0.0.1",2000)
+    clt = BasicClient("full_stack_alchemists", "127.0.0.1", 2000)
     while True:
-        m = input("enter message: ")
-        if m == '' or m == 'exit':
+        m = input("Enter message: ")
+        if m == '' or m.lower() == 'exit':
             break
-        else:
-            clt.sendMsg(m)
-            clt.sendMsg(m)
+        clt.sendMsg(m)
