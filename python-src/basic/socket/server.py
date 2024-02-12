@@ -70,7 +70,7 @@ class SessionHandler(threading.Thread):
             name,group,text = bldr.decode(raw)
             print(f"from {name}, to group: {group}, text: {text}")
         except Exception as e:
-            pass
+            print(f"An error occurred during message processing: {e}")
 
     def run(self):
         while self.good:
