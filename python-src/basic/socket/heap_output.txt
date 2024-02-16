@@ -1,0 +1,13 @@
+Partition of a set of 55552 objects. Total size = 7425205 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0  15937  29  1414784  19   1414784  19 str
+     1   3458   6  1247048  17   2661832  36 types.CodeType
+     2  10902  20   777416  10   3439248  46 tuple
+     3    690   1   720816  10   4160064  56 type
+     4   6565  12   590654   8   4750718  64 bytes
+     5   3256   6   494912   7   5245630  71 function
+     6    690   1   250136   3   5495766  74 dict of type
+     7    887   2   244432   3   5740198  77 dict (no owner)
+     8    121   0   165696   2   5905894  80 dict of module
+     9      3   0   135672   2   6041566  81 _io.BufferedWriter
+<213 more rows. Type e.g. '_.more' to view.>
