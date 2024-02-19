@@ -15,17 +15,15 @@ class AsyncBasicServer:
         while True:
             data = await reader.read(2048)
             if not data:
-                break  # No data means the client closed the connection
+                break 
 
-            # Process the data
             bldr = builder.BasicBuilder()
             name, group, text = bldr.decode(data.decode())
             response = f"Received: {text}"
             print(f"from {name}, to group: {group}, text: {text}")
 
-            # Send a response back to the client
             writer.write(response.encode())
-            await writer.drain()  # Make sure the data is sent
+            await writer.drain() 
 
         print(f"Closing connection from {addr}")
         writer.close()
@@ -45,12 +43,8 @@ if __name__ == '__main__':
     ip = "127.0.0.1"
     port = 2000
 
-    # Initialize Guppy's heap inspector
     h = hpy()
     gc.set_debug(gc.DEBUG_STATS)
 
     server = AsyncBasicServer(ip, port)
     asyncio.run(server.run_server())
-
-    # Profiling and GC stats are handled differently with asyncio;
-    # consider using specific tools designed for asynchronous profiling.

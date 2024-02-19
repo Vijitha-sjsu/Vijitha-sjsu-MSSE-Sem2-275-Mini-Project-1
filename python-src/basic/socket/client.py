@@ -57,8 +57,7 @@ class BasicClient(object):
         m = bldr.encode(self.name, self.group, text)
         self._clt.send(bytes(m, "utf-8"))
     
-        # Wait for the response from the server
-        response = self._clt.recv(1024)  # Adjust buffer size as needed
+        response = self._clt.recv(1024)  
         print(f"Received response: {response.decode('utf-8')}")
 
     def groups(self):
